@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<script src="{{ url_for('static', filename='gamemaster.js') }}"></script>
+<title>Gamemaster</title>
+{% endblock %}
+
+
+{% block body %}
+<header class="main-header" style="text-align: center;">
+    <h2 class="main-header-title">
+        Gamemaster
+    </h2>
+</header>
+<div class="content">
+    <div class="teams-list" id="teams-list">
+        {% for team, data in teams.items() %}
+        <div class="team" id="{{ team }}" style="order: {{ data.get('idx') }}" {% if not data.get('connected') %}style="filter:grayscale(1)"{% endif %}>
+            <header class="banner">
+                <div>
+                    <h4>
+                        {{ team }}
+                    </h4>
+                </div>
+                <div class="score">
+                    <input type="button" value="-" onclick="subPoint('{{team}}')">
+                    <span id="score-{{team}}">
+                        {{ data.get('score') }}
+                    </span>
+                    <input type="button" value="+" onclick="addPoint('{{team}}')">
+                </div>
+                <div class="team-controller">
+                    <input type="button" value="↑" onclick="upOrder('{{team}}')">
+                    <input type="button" value="↓" onclick="downOrder('{{team}}')">
+                    <input type="button" value="Kick" onclick="kick('{{team}}')">
+                </div>
+            </header>
+            <div class="answer">
+                <pre id="{{ team }}-answer">{{ data.get('answer', '') }}</pre>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="question-form">
+        <div class="question-type">
+            <input type="radio" name="question" id="question1" value="1">
+            <label class="question" for="question1">Question simple</label>
+            <input type="radio" name="question" id="question2" value="2">
+            <label class="question" for="question2">Vrai faux</label>
+            <input type="radio" name="question" id="question3" value="3">
+            <label class="question" for="question3">Buzzer</label>
+        </div>
+        <input type="button" class="send-btn" value="Nouvelle question" onclick="sendNewQuestion()">
+    </div>
+    
+    {% if error %}
+    <ul>
+        <li>{{error}}</li>
+    </ul>
+    {% endif %}
+</div>
+
+{% endblock %}

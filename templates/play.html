@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<script src="{{ url_for('static', filename='play.js') }}"></script>
+<title>Jouer : {{ name }}</title>
+{% endblock %}
+
+
+{% block body %}
+<header class="main-header">
+    <h2 class="main-header-title">
+        {{ name }}
+    </h2>
+    <h2 class="main-header-title">
+        Score : <span id="score">{{ data["score"] }}</span>
+    </h2>
+</header>
+<div class="wrapper" id="question">
+    {% if questionType==0 %}
+    <ul>
+        <li>
+            En attente d'une question
+        </li>
+    </ul>
+    {% elif questionType=="1" %}
+    <h2>Votre réponse</h2>
+    <textarea class="player-answer" rows="10" cols="60" placeholder="Votre réponse" id="answer">{% if data["answer"] %}{{ data["answer"] }}{% endif %}</textarea>
+    <button type="button" class="send-btn" name="send" id="send-btn" onclick="clickValidate()">Valider</button>
+    {% elif questionType=="3" %}
+        {% if data["answer"] %}
+        <button type="button" class="buzz" id="buzz" onclick="clickBuzz()" disabled="">
+        {% else %}
+        <button type="button" class="buzz" id="buzz" onclick="clickBuzz()">
+        {% endif %}
+        BUZZ
+    </button>
+    {% endif %}
+</div>
+
+{% if error %}
+<ul>
+    <li>{{error}}</li>
+</ul>
+{% endif %}
+
+{% endblock %}
