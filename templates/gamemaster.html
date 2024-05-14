@@ -15,7 +15,7 @@
 <div class="content">
     <div class="teams-list" id="teams-list">
         {% for team, data in teams.items() %}
-        <div class="team" id="{{ team }}" style="order: {{ data.get('idx') }}" {% if not data.get('connected') %}style="filter:grayscale(1)"{% endif %}>
+        <div class="team" id="{{ team }}" style="order: {{ data.get('idx') }} {% if not data.get('connected') %} ;filter:grayscale(1) {% endif %}">
             <header class="banner">
                 <div>
                     <h4>
@@ -23,16 +23,16 @@
                     </h4>
                 </div>
                 <div class="score">
-                    <input type="button" value="-" onclick="subPoint('{{team}}')">
+                    <input type="button" value="-" onclick="subPoint(`{{team}}`)">
                     <span id="score-{{team}}">
                         {{ data.get('score') }}
                     </span>
-                    <input type="button" value="+" onclick="addPoint('{{team}}')">
+                    <input type="button" value="+" onclick="addPoint(`{{team}}`)">
                 </div>
                 <div class="team-controller">
-                    <input type="button" value="↑" onclick="upOrder('{{team}}')">
-                    <input type="button" value="↓" onclick="downOrder('{{team}}')">
-                    <input type="button" value="Kick" onclick="kick('{{team}}')">
+                    <input type="button" value="↑" onclick="upOrder(`{{team}}`)">
+                    <input type="button" value="↓" onclick="downOrder(`{{team}}`)">
+                    <input type="button" value="Kick" onclick="kick(`{{team}}`)">
                 </div>
             </header>
             <div class="answer">

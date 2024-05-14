@@ -2,12 +2,12 @@
 var socketio = io();
 
 
-const addTeam = (name, score) => {
+const addTeam = (name, score, order) => {
     const teams = document.getElementById("teams-list")
     console.log(name + " joined quiz");
     if (document.getElementById(name) == null){
         const content = `
-            <div class="team" id="${ name }" {% if not data.get('connected') %}style="filter:grayscale(1)"{% endif %}>
+            <div class="team" id="${ name }" style="order: ${ order }">
                 <header class="banner">
                     <div>
                         <h4>
@@ -15,14 +15,16 @@ const addTeam = (name, score) => {
                         </h4>
                     </div>
                     <div class="score">
-                        <input type="button" value="-" onclick="subPoint('${ name }')">
+                        <input type="button" value="-" onclick="subPoint(\`${ name }\`)">
                         <span id="score-${ name }">
                             0
                         </span>
-                        <input type="button" value="+" onclick="addPoint('${ name }')">
+                        <input type="button" value="+" onclick="addPoint(\`${ name }\`)">
                     </div>
-                    <div>
-                        <input type="button" value="Kick" onclick="kick('${ name }')">
+                    <div class="team-controller">
+                        <input type="button" value="↑" onclick="upOrder(\`${ name }\`)">
+                        <input type="button" value="↓" onclick="downOrder(\`${ name }\`)">
+                        <input type="button" value="Kick" onclick="kick(\`${ name }\`)">
                     </div>
                 </header>
                 <div class="answer">
@@ -33,6 +35,7 @@ const addTeam = (name, score) => {
         teams.innerHTML += content;
     }else{
         document.getElementById(name).style.filter = "";
+        document.getElementById(name).style.order = order
     }
 };
 
@@ -45,6 +48,7 @@ const disconnectTeam = (name) => {
     const team = document.getElementById(name);
 
     team.style.filter = "grayscale(1)";
+    team.style.order = "10000"
 
     // team.remove();
 }
@@ -98,7 +102,7 @@ socketio.on("message", (data) => {
     console.log(data);
     switch(data.action){
         case "connect":
-            addTeam(data.name, data.data.score);
+            addTeam(data.name, data.data.score, data.data.idx);
             break;
         case "disconnect":
             disconnectTeam(data.name);

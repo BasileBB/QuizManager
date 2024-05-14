@@ -11,27 +11,37 @@ teams = {}
 questionType = 0
 questionCount = 0
 buzzCount = 0
+teamCount = 0
 
 @app.route('/', methods=['POST', 'GET'])
 def home():
     if request.method == 'POST':
         name = request.form.get("name")
         join = request.form.get("join", False)
-        
+
+        global teamCount
+
         if not name:
             return render_template("home.html", error="Entrez un nom d'équipe")
         
         if name == "gamemaster":
             return render_template("home.html", error="Entrez un autre nom d'équipe")
 
+        if name in teams and teams[name]["connected"]:
+            return render_template("home.html", error="Nom d'équipe déjà prit")
+
         session["room"] = "teams"
         session["name"] = name
-        teams[name] = {
-            "score" : 0,
-            "idx": len(teams),
-            "connected": True,
-            "answer": "",
-            "history": []}
+
+        if name not in teams:
+            teams[name] = {
+                "score" : 0,
+                "idx": teamCount,
+                "connected": True,
+                "answer": "",
+                "history": []}
+            
+            teamCount += 1
 
         return redirect(url_for("play"))
     else:
@@ -93,7 +103,7 @@ def connect():
 def disconnect():
     name = session.get("name")
     if name not in teams:
-        print(f"{name} left teams")
+        print(f"{name} left")
         return
     
     leave_room("teams")
