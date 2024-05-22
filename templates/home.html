@@ -10,9 +10,9 @@
     <h3>Rejoignez le quiz !</h3>
     <div>
         <label>Nom d'équipe:</label>
-        <input type="text" placeholder="Rentrer nom d'équipe" minlength="1" maxlength="100" name="name" value="{{name}}" pattern="[a-zA-Z !0-9àè-ê(-.]*">
+        <input type="text" placeholder="Rentrer nom d'équipe" minlength="1" maxlength="100" name="name" value="{{name}}" pattern="[a-zA-Z !0-9çàè-ê.,;:\-']*" title="Seulement caractères alphanumériques et .,;:-'">
     </div>
-    <button type="submit" name="join" class="join-btn">Rejoindre le quiz</button>
+    <button type="submit" name="join" class="send-btn">Rejoindre le quiz</button>
     {% if error %}
     <ul>
         <li>{{error}}</li>

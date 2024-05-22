@@ -23,16 +23,16 @@
                     </h4>
                 </div>
                 <div class="score">
-                    <input type="button" value="-" onclick="subPoint(`{{team}}`)">
+                    <button type="button" onclick="subPoint(`{{team}}`)">-</button>
                     <span id="score-{{team}}">
                         {{ data.get('score') }}
                     </span>
-                    <input type="button" value="+" onclick="addPoint(`{{team}}`)">
+                    <button type="button" onclick="addPoint(`{{team}}`)">+</button>
                 </div>
                 <div class="team-controller">
-                    <input type="button" value="↑" onclick="upOrder(`{{team}}`)">
-                    <input type="button" value="↓" onclick="downOrder(`{{team}}`)">
-                    <input type="button" value="Kick" onclick="kick(`{{team}}`)">
+                    <button type="button" onclick="upOrder(`{{team}}`)">↑</button>
+                    <button type="button" onclick="downOrder(`{{team}}`)">↓</button>
+                    <button type="button" onclick="kick(`{{team}}`)">Kick</button>
                 </div>
             </header>
             <div class="answer">
@@ -51,9 +51,8 @@
             <input type="radio" name="question" id="question3" value="3">
             <label class="question" for="question3">Buzzer</label>
         </div>
-        <input type="button" class="send-btn" value="Nouvelle question" onclick="sendNewQuestion()">
+        <button type="button" class="send-btn" onclick="sendNewQuestion()">Nouvelle question</button>
     </div>
-    
     {% if error %}
     <ul>
         <li>{{error}}</li>

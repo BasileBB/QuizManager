@@ -15,16 +15,16 @@ const addTeam = (name, score, order) => {
                         </h4>
                     </div>
                     <div class="score">
-                        <input type="button" value="-" onclick="subPoint(\`${ name }\`)">
+                        <button type="button" onclick="subPoint(\`${ name }\`)">-</button>
                         <span id="score-${ name }">
                             0
                         </span>
-                        <input type="button" value="+" onclick="addPoint(\`${ name }\`)">
+                        <button type="button" onclick="addPoint(\`${ name }\`)">+</button>
                     </div>
                     <div class="team-controller">
-                        <input type="button" value="↑" onclick="upOrder(\`${ name }\`)">
-                        <input type="button" value="↓" onclick="downOrder(\`${ name }\`)">
-                        <input type="button" value="Kick" onclick="kick(\`${ name }\`)">
+                        <button type="button" onclick="upOrder(\`${ name }\`)">↑</button>
+                        <button type="button" onclick="downOrder(\`${ name }\`)">↓</button>
+                        <button type="button" onclick="kick(\`${ name }\`)">Kick</button>
                     </div>
                 </header>
                 <div class="answer">

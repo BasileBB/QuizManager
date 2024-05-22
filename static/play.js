@@ -3,7 +3,7 @@ var socketio = io();
 const simple_question = `
 <h2>Votre réponse</h2>
 <textarea class="player-answer" rows="10" placeholder="Votre réponse" id="answer"></textarea>
-<button type="button" name="send" id="send-btn" onclick="clickValidate()">Valider</button>
+<button type="button" class="send-btn" name="send" id="send-btn" onclick="clickValidate()">Valider</button>
 `
 const buzz_question = `
 <button type="button" class="buzz" id="buzz" onclick="clickBuzz()">BUZZ</button>

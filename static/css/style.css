@@ -3,9 +3,12 @@
 	src: url('Pangolin-Regular.ttf');
 }
 
+html{
+    background-color: cornsilk;
+}
+
 body{
     margin: 0;
-    background-color: cornsilk;
     font-family: 'Pangolin', sans-serif;
 }
 
@@ -18,10 +21,9 @@ body{
 .main-header {
     display: flex;
     width: 100%;
-    height: 50px;
+    height: 3em;
     background-color: crimson;
     margin: 0;
-    /* padding: 10px; */
     border-bottom: 2px solid black;
     color: aliceblue;
     align-items: center;
@@ -30,12 +32,7 @@ body{
 
 .main-header-title {
     margin: 0;
-    padding: 10px;
-}
-
-.main-header-content {
-    color: aliceblue;
-    padding: 5px;
+    padding: 0.4em;
 }
 
 .register-form{
@@ -109,7 +106,7 @@ h2 {
     flex-grow: 1;
 }
 
-.banner div input{
+.banner div button{
     height: 40px;
     width: 40px;
     border: 2px solid black;
@@ -119,7 +116,7 @@ h2 {
     cursor: pointer;
 }
 
-.banner div input:active{
+.banner div button:active{
     box-shadow: black 0px 0px;
     transform: translate(4px, 4px);
 }
@@ -200,13 +197,17 @@ input[name="question"]:checked + .question {
     transform: translate(4px, 4px);
 }
 
+button{
+    font-family: 'Pangolin', sans-serif;
+}
+
 .send-btn {
-    margin: 20px;
+    /* margin: 20px; */
     border: 2px solid black;
-    height: 3em;
     border-radius: 10px;
     background-color: cornflowerblue;
     box-shadow: black 4px 4px;
+    padding: 1em;
 }
 
 .send-btn:active{
@@ -237,27 +238,26 @@ input[name="question"]:checked + .question {
     border: 2px double black;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 526px) {
     .player-answer{
-        width: 100%;
+        width: 95%;
     }
 }
 
 .buzz {
     margin: 10px;
-    font-size: 40px;
+    font-size: calc(min(70vw,70vh)*0.3);
     font-weight: 900;
-    width: 300px;
-    height: 300px;
-    padding: 20px;
+    width: min(70vw, 70vh);
+    height: min(70vw, 70vh);
     cursor: pointer;
     border-radius: 50%;
     border: 2px solid black;
     background-color: gold;
     box-shadow: black 10px 10px;
     transition: 
-    transform 20ms,
-    box-shadow 20ms;
+    transform 10ms,
+    box-shadow 10ms;
 }
 
 .buzz[disabled="false"]:active {
