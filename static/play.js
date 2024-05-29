@@ -9,6 +9,12 @@ const buzz_question = `
 <button type="button" class="buzz" id="buzz" onclick="clickBuzz()">BUZZ</button>
 `
 
+const image_question = `
+<img class="question-image" id="question-image">
+<textarea class="player-answer" rows="2" placeholder="Votre réponse" id="answer"></textarea>
+<button type="button" class="send-btn" name="send" id="send-btn" onclick="clickValidate()">Valider</button>
+`
+
 const clickValidate = () => {
     const answer = document.getElementById("answer");
     if (answer.disabled){
@@ -44,12 +50,23 @@ socketio.on("message", (data) => {
             document.getElementById('score').innerHTML = data.score;
             break;
         case "question":
+            console.log("new question")
+            const question = document.getElementById("question")
             switch(data.type){
                 case "1":
-                    document.getElementById("question").innerHTML = simple_question;
+                    question.innerHTML = simple_question;
                     break;
+                
+                case "2":
+                    question.innerHTML = image_question;
+                    const img = document.getElementById("question-image");
+                    // var blob = new Blob( [ data.image ], { type: "image/jpeg" } );
+                    const blob = new Blob( [ data.image ], { type: "image/jpeg" } );
+                    img.src = URL.createObjectURL(blob);
+                    break;
+                
                 case "3":
-                    document.getElementById("question").innerHTML = buzz_question;
+                    question.innerHTML = buzz_question;
                     break;
                 default:
 

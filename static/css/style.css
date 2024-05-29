@@ -157,8 +157,10 @@ h2 {
 .question-form{
     display: flex;
     flex-flow: column;
-    width: 100%;
+    /* width: 100%; */
     align-items: center;
+    gap: 5px;
+    margin: 10px;
 }
 
 input[name="question"] {
@@ -169,12 +171,11 @@ input[name="question"] {
     width: 100%;
     display: inline-flex;
     overflow: hidden;
-    gap: 10px;
 }
 
 .question {
     padding: 10px;
-    margin: 10px;
+    margin: 5px;
     font-size: 14px;
     width: 100%;
     color: black;
@@ -208,11 +209,45 @@ button{
     background-color: cornflowerblue;
     box-shadow: black 4px 4px;
     padding: 1em;
+    cursor: pointer;
 }
 
 .send-btn:active{
     box-shadow: black 0px 0px;
     transform: translate(4px, 4px);
+}
+
+.question-option {
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 5px;
+    align-items: center;
+    display: none;
+    flex-flow: row;
+    justify-content: center;
+    gap: 5px;
+    width: 100%;
+}
+
+input[type=file]::file-selector-button {
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: cornflowerblue;
+    box-shadow: black 4px 4px;
+    padding: 1em;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+input[type=file]::file-selector-button:active {
+    box-shadow: black 0px 0px;
+    transform: translate(4px, 4px);
+}
+
+.loaded-image {
+    width: 100%;
+    max-width: 25vw;
+    height: auto;
 }
 
 /*////////////////////////////////////
@@ -242,6 +277,13 @@ button{
     .player-answer{
         width: 95%;
     }
+}
+
+.question-image {
+    width: 100%;
+    max-width: 1000px;
+    min-width: 320px;
+    height: auto;
 }
 
 .buzz {

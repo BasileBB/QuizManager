@@ -50,7 +50,6 @@ const disconnectTeam = (name) => {
     team.style.filter = "grayscale(1)";
     team.style.order = "10000"
 
-    // team.remove();
 }
 
 const addPoint = (name) => {
@@ -87,8 +86,16 @@ const kick = (name) => {
 }
 
 const sendNewQuestion = () => {
-    const selected = document.querySelector('input[name="question"]:checked');
-    socketio.emit("question", {"type": selected.value});
+    const question_type = document.querySelector('input[name="question"]:checked').value;
+
+    if (question_type=="2") {
+        const questionImage = document.getElementById("question-image").files[0]
+        console.log("send 2")
+        socketio.emit("question", {"type": question_type, "image": questionImage})
+    }else{
+        socketio.emit("question", {"type": question_type});
+    }
+
     
     const answers = document.querySelectorAll('.answer *');
     for (let i = 0 ; i < answers.length; i++){
@@ -96,9 +103,40 @@ const sendNewQuestion = () => {
     }
 }
 
+function loadQuestionOption(value) {
+    const options = document.getElementById("question-option");
+    switch (value) {
+        case "2":
+            options.innerHTML = `<input type="file" id="question-image" accept="image/png, image/jpeg" oninput="displayImage(this)">`;
+            options.style.display = "inline-flex"
+            break;
+    
+        default:
+            options.innerHTML = "";
+            options.style.display = "none"
+            break;
+    }    
+}
+
+function displayImage(file_input){
+    console.log(this.files);
+    const new_image = file_input.files[0];
+    let img = document.getElementById("loaded-image");
+    
+    if (img==null){
+        img = document.createElement("img");
+        img.classList.add("loaded-image");
+        img.id = "loaded-image";
+    }
+
+    img.src = window.URL.createObjectURL(new_image);
+    document.getElementById("question-option").appendChild(img);
+
+}
+
 socketio.on("message", (data) => {
     // console.log(data.name + " joined quiz");
-    // addTeam(data.name, data.data.score)
+    
     console.log(data);
     switch(data.action){
         case "connect":

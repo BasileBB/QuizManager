@@ -44,12 +44,14 @@
     
     <div class="question-form">
         <div class="question-type">
-            <input type="radio" name="question" id="question1" value="1">
+            <input type="radio" name="question" id="question1" value="1" onchange="loadQuestionOption(this.value)">
             <label class="question" for="question1">Question simple</label>
-            <input type="radio" name="question" id="question2" value="2">
-            <label class="question" for="question2">Vrai faux</label>
-            <input type="radio" name="question" id="question3" value="3">
+            <input type="radio" name="question" id="question2" value="2" onchange="loadQuestionOption(this.value)">
+            <label class="question" for="question2">Image</label>
+            <input type="radio" name="question" id="question3" value="3" onchange="loadQuestionOption(this.value)">
             <label class="question" for="question3">Buzzer</label>
+        </div>
+        <div class="question-option" id="question-option">
         </div>
         <button type="button" class="send-btn" onclick="sendNewQuestion()">Nouvelle question</button>
     </div>

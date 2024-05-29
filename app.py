@@ -257,6 +257,8 @@ def sendQuestion(data):
         "action": "question",
         "type": questionType
     }
+    if questionType == "2":
+        content["image"] = data['image']
     send(content, to="teams")
 
 @socketio.on("history")
@@ -266,4 +268,4 @@ def getHistory():
 if __name__ == "__main__":
     # buzzCount = 0
     # socketio.run(app, debug=True)
-    socketio.run(app, host="0.0.0.0")
+    socketio.run(app, host="0.0.0.0", port=3000)
