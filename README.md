@@ -2,6 +2,30 @@
 
 A simple web app, to manage quiz.
 
+## Setup
+You will need Python, virtualenv and pip.
+
+Clone repo
+
+Create a virtual environment in your directory
+
+```bash
+virtualenv my-env
+```
+
+Activate your virtual environment
+
+```bash
+source my-env/bin/activate
+```
+
+Install required packages
+
+```bash
+pip install -r requirement.txt
+```
+
+Ready to run
 
 ## How to run
 Start app
