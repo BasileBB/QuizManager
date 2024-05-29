@@ -34,7 +34,11 @@ python3 app.py
 ```
 
 ### Player view
-Open [127.0.0.0:5000](http://127.0.0.0:5000/)
+Open [127.0.0.0:3000](http://127.0.0.0:3000/)
+
+You can access this view from any device on the same network with the right ip address
 
 ### Gamemaster view
-Open [127.0.0.0:5000/gamemaster](http://127.0.0.0:5000//gamemaster)
+Open [127.0.0.0:3000/gamemaster](http://127.0.0.0:3000//gamemaster)
+
+You can access this view from any device on the same network with the right ip address
