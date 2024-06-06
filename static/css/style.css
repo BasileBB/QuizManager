@@ -128,10 +128,24 @@ h2 {
     justify-content: flex-end;
 }
 
-.banner div span{
+.score{
     display: inline-block;
-    width: 60px;
+    width: 4em;
     text-align: center;
+    margin-left: 1em;
+}
+
+.scoring{
+    vertical-align: super;
+    border: 2px solid;
+    border-radius: 50%;
+    /* color: lightgreen; */
+    /* background-color: forestgreen; */
+    padding: 0.2em;
+}
+
+.scoring:empty{
+    display: none;
 }
 
 .answer {
@@ -149,7 +163,7 @@ h2 {
 }
 
 .answer pre{
-    margin: 0;
+    margin: auto;
     padding: 10px;
     text-align: center;
 }
@@ -189,6 +203,10 @@ input[name="question"] {
         background 200ms,
         transform 200ms,
         box-shadow 200ms;
+}
+
+.question:hover{
+    background-color: goldenrod;
 }
 
 input[name="question"]:checked + .question {

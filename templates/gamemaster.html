@@ -22,11 +22,14 @@
                         {{ team }}
                     </h4>
                 </div>
-                <div class="score">
+                <div>
                     <button type="button" onclick="subPoint(`{{team}}`)">-</button>
-                    <span id="score-{{team}}">
-                        {{ data.get('score') }}
-                    </span>
+                    <div class="score">
+                        <span id="score-{{team}}">
+                            {{ data.get('score') }}
+                        </span>
+                        <span class="scoring" id="scoring-{{team}}"></span>
+                    </div>
                     <button type="button" onclick="addPoint(`{{team}}`)">+</button>
                 </div>
                 <div class="team-controller">

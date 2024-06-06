@@ -14,11 +14,12 @@ const addTeam = (name, score, order) => {
                             ${ name }
                         </h4>
                     </div>
-                    <div class="score">
+                    <div>
                         <button type="button" onclick="subPoint(\`${ name }\`)">-</button>
-                        <span id="score-${ name }">
-                            0
-                        </span>
+                        <div class="score">
+                            <span id="score-${ name }">0</span>
+                            <span class="scoring" id="scoring-${ name }"></span>
+                        </div>
                         <button type="button" onclick="addPoint(\`${ name }\`)">+</button>
                     </div>
                     <div class="team-controller">
@@ -53,15 +54,35 @@ const disconnectTeam = (name) => {
 }
 
 const addPoint = (name) => {
-    const score = document.getElementById("score-" + name)
-    socketio.emit("updateScore", {"name": name, "update": 1});
-    score.innerHTML = parseInt(score.innerHTML) + 1
+    updateScoring(document.getElementById("scoring-" + name), 1);
 }
 
 const subPoint = (name) => {
-    const score = document.getElementById("score-" + name)
-    socketio.emit("updateScore", {"name": name, "update": -1});
-    score.innerHTML = parseInt(score.innerHTML) - 1
+    updateScoring(document.getElementById("scoring-" + name), -1);
+}
+
+const updateScoring = (scoring, point) => {
+    var score = parseInt(scoring.innerHTML);
+    if(isNaN(score)){
+        score = 0
+    }
+    var new_scoring = score + point;
+    if(new_scoring == 0){   
+        scoring.innerHTML = new_scoring;
+        // scoring.style.background = "grey";
+        scoring.style.color = "grey"
+        scoring.style.borderColor = "grey"
+    }else if(new_scoring > 0){
+        scoring.innerHTML = "+" + new_scoring
+        // scoring.style.background = "forestgreen";
+        scoring.style.color = "lawngreen"
+        scoring.style.borderColor = "lawngreen"
+    }else{
+        scoring.innerHTML = new_scoring
+        // scoring.style.background = "red";
+        scoring.style.color = "firebrick";
+        scoring.style.borderColor = "firebrick";
+    }
 }
 
 const upOrder = (name) => {
@@ -97,9 +118,15 @@ const sendNewQuestion = () => {
     }
 
     
-    const answers = document.querySelectorAll('.answer *');
-    for (let i = 0 ; i < answers.length; i++){
-        answers[i].innerHTML = ""
+    const teams = document.querySelectorAll('.team');
+    for (let i = 0 ; i < teams.length; i++){
+        teams[i].querySelector('.answer *').innerHTML = "";
+        const scoring = parseInt(teams[i].querySelector('.scoring').innerHTML);
+        if(!isNaN(scoring)){
+            socketio.emit("updateScore", {"name": teams[i].getAttribute("id"), "update": scoring});
+            teams[i].querySelector('.scoring').innerHTML = "";
+            teams[i].querySelector('.score *').innerHTML = parseInt(teams[i].querySelector('.score *').innerHTML) + scoring;
+        }
     }
 }
 
