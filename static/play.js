@@ -35,6 +35,7 @@ const clickBuzz = () => {
     const buzz = document.getElementById("buzz");
     buzz.disabled = true;
     socketio.emit("buzz");
+    document.getElementById("buzzSound").play()
 
 }
 

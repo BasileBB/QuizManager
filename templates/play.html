@@ -7,6 +7,9 @@
 
 
 {% block body %}
+<audio id="buzzSound">
+    <source src="{{ url_for('static', filename='sample/'+data["sample"]) }}" type="audio/mpeg">
+</audio>
 <header class="main-header">
     <h2 class="main-header-title">
         {{ name }}

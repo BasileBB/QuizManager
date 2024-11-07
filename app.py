@@ -1,6 +1,8 @@
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, send_from_directory
 from flask_socketio import join_room, leave_room, send, SocketIO
-import random
+from playsound import playsound
+from glob import glob
+from random import choice
 from string import ascii_uppercase
 
 app = Flask(__name__)
@@ -12,6 +14,10 @@ questionType = 0
 questionCount = 0
 buzzCount = 0
 teamCount = 0
+
+def playSample(sample_name):
+    if not sample_name == "":
+        playsound('static/sample/' + sample_name)
 
 @app.route('/', methods=['POST', 'GET'])
 def home():
@@ -39,6 +45,7 @@ def home():
                 "idx": teamCount,
                 "connected": True,
                 "answer": "",
+                "sample": choice(sample_list),
                 "history": []}
             
             teamCount += 1
@@ -152,6 +159,7 @@ def buzz():
 
     send(content, to="gamemaster")
     print(f"{name} buzz in {buzzCount}")
+    playSample(teams[name]["sample"])
 
 
 ######################
@@ -268,4 +276,5 @@ def getHistory():
 if __name__ == "__main__":
     # buzzCount = 0
     # socketio.run(app, debug=True)
+    sample_list = glob("*.mp3", root_dir="static/sample")
     socketio.run(app, host="0.0.0.0", port=3000)
