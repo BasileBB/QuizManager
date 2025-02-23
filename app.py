@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for, send_from_directory
 from flask_socketio import join_room, leave_room, send, SocketIO
-from playsound import playsound
 from glob import glob
 from random import choice
 from string import ascii_uppercase
@@ -14,10 +13,6 @@ questionType = 0
 questionCount = 0
 buzzCount = 0
 teamCount = 0
-
-def playSample(sample_name):
-    if not sample_name == "":
-        playsound('static/sample/' + sample_name)
 
 @app.route('/', methods=['POST', 'GET'])
 def home():
@@ -77,7 +72,7 @@ def admin():
         print(f"{name} is now gamemaster")
         session["name"] = "gamemaster"
 
-    return render_template("gamemaster.html", teams=teams)
+    return render_template("gamemaster/gamemaster.html", teams=teams)
 
 
 #######################
@@ -159,7 +154,6 @@ def buzz():
 
     send(content, to="gamemaster")
     print(f"{name} buzz in {buzzCount}")
-    playSample(teams[name]["sample"])
 
 
 ######################
