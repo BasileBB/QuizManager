@@ -1,0 +1,30 @@
+<div class="team" id="{{ team }}" style="order: {{ data.get('idx') }} {% if not data.get('connected') %} ;filter:grayscale(1) {% endif %}">
+    <audio id="buzzSound-{{ team }}">
+        <source src="{{ url_for('static', filename='sample/'+data['sample']) }}" type="audio/mpeg">
+    </audio>
+    <header class="banner">
+        <div>
+            <h4>
+                {{ team }}
+            </h4>
+        </div>
+        <div>
+            <button type="button" onclick="subPoint(`{{team}}`)">-</button>
+            <div class="score">
+                <span id="score-{{team}}">
+                    {{ data.get('score') }}
+                </span>
+                <span class="scoring" id="scoring-{{team}}"></span>
+            </div>
+            <button type="button" onclick="addPoint(`{{team}}`)">+</button>
+        </div>
+        <div class="team-controller">
+            <button type="button" onclick="upOrder(`{{team}}`)">↑</button>
+            <button type="button" onclick="downOrder(`{{team}}`)">↓</button>
+            <button type="button" onclick="kick(`{{team}}`)">Kick</button>
+        </div>
+    </header>
+    <div class="answer">
+        <pre id="{{ team }}-answer">{{ data.get('answer', '') }}</pre>
+    </div>
+</div>

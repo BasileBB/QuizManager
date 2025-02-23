@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<script src="{{ url_for('static', filename='gamemaster.js') }}"></script>
+{% include "gamemaster/gamemaster-script.html" %}
 <title>Gamemaster</title>
 {% endblock %}
 
@@ -15,33 +15,7 @@
 <div class="content">
     <div class="teams-list" id="teams-list">
         {% for team, data in teams.items() %}
-        <div class="team" id="{{ team }}" style="order: {{ data.get('idx') }} {% if not data.get('connected') %} ;filter:grayscale(1) {% endif %}">
-            <header class="banner">
-                <div>
-                    <h4>
-                        {{ team }}
-                    </h4>
-                </div>
-                <div>
-                    <button type="button" onclick="subPoint(`{{team}}`)">-</button>
-                    <div class="score">
-                        <span id="score-{{team}}">
-                            {{ data.get('score') }}
-                        </span>
-                        <span class="scoring" id="scoring-{{team}}"></span>
-                    </div>
-                    <button type="button" onclick="addPoint(`{{team}}`)">+</button>
-                </div>
-                <div class="team-controller">
-                    <button type="button" onclick="upOrder(`{{team}}`)">↑</button>
-                    <button type="button" onclick="downOrder(`{{team}}`)">↓</button>
-                    <button type="button" onclick="kick(`{{team}}`)">Kick</button>
-                </div>
-            </header>
-            <div class="answer">
-                <pre id="{{ team }}-answer">{{ data.get('answer', '') }}</pre>
-            </div>
-        </div>
+            {% include "gamemaster/team-template.html" %}
         {% endfor %}
     </div>
     
