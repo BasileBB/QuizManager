@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for, send_from_directory
 from flask_socketio import join_room, leave_room, send, SocketIO
 from glob import glob
-from random import choice
+from random import choice, shuffle
 from string import ascii_uppercase
 
 app = Flask(__name__)
@@ -40,7 +40,7 @@ def home():
                 "idx": teamCount,
                 "connected": True,
                 "answer": "",
-                "sample": choice(sample_list),
+                "sample": distribute_sample(remaining_sample_list),
                 "history": []}
             
             teamCount += 1
@@ -252,23 +252,42 @@ def sendQuestion(data):
     for name, team in teams.items():
         team["history"].append(team.get("answer", ""))
         team["answer"] = ""
-    if questionType == "3":
-        global buzzCount
-        buzzCount = 0
+    
     content = {
         "action": "question",
         "type": questionType
     }
+    
+    if questionType == "3":
+        global buzzCount
+        buzzCount = 0
     if questionType == "2":
+        print(data['image'])
         content["image"] = data['image']
+    
     send(content, to="teams")
 
 @socketio.on("history")
 def getHistory():
     send()
 
+##################
+# Other function #
+##################
+
+def distribute_sample(p_remaining_sample):
+    if not sample_list:
+        return ""
+    else:
+        if not p_remaining_sample:
+            p_remaining_sample = sample_list.copy()
+            shuffle(p_remaining_sample)
+
+        return p_remaining_sample.pop()
+
 if __name__ == "__main__":
-    # buzzCount = 0
     # socketio.run(app, debug=True)
     sample_list = glob("*.mp3", root_dir="static/sample")
+    remaining_sample_list = sample_list.copy()
+    shuffle(remaining_sample_list)
     socketio.run(app, host="0.0.0.0", port=3000)
