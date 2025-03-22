@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request, session, redirect, url_for, send_from_directory
 from flask_socketio import join_room, leave_room, send, SocketIO
+import os
 from glob import glob
 from random import choice, shuffle
 from string import ascii_uppercase
+from datetime import datetime
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "123456789"
@@ -11,6 +13,7 @@ socketio = SocketIO(app)
 teams = {}
 questionType = 0
 questionCount = 0
+imagename = ""
 buzzCount = 0
 teamCount = 0
 
@@ -63,7 +66,7 @@ def play():
         return redirect(url_for("home"))
     else:
         print(questionType)
-        return render_template("play.html", name=name, data=teams[name], questionType=questionType)
+        return render_template("play.html", name=name, data=teams[name], questionType=questionType, imageURL=imagename)
 
 @app.route('/gamemaster', methods=['POST', 'GET'])
 def admin():
@@ -262,8 +265,14 @@ def sendQuestion(data):
         global buzzCount
         buzzCount = 0
     if questionType == "2":
-        print(data['image'])
-        content["image"] = data['image']
+        if not os.path.exists("static/image"):
+            os.mkdir("static/image")
+        name = datetime.now().strftime('%d%m%y%H%M%S')
+        f = open("static/image/tempfile" + name, "wb")
+        f.write(data['image'])
+        content["image"] = url_for("static", filename="/image/tempfile"+name)
+        global imagename
+        imagename = f.name
     
     send(content, to="teams")
 

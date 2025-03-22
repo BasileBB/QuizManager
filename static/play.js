@@ -61,9 +61,7 @@ socketio.on("message", (data) => {
                 case "2":
                     question.innerHTML = image_question;
                     const img = document.getElementById("question-image");
-                    // var blob = new Blob( [ data.image ], { type: "image/jpeg" } );
-                    const blob = new Blob( [ data.image ], { type: "image/jpeg" } );
-                    img.src = URL.createObjectURL(blob);
+                    img.src = data.image;
                     break;
                 
                 case "3":
