@@ -20,6 +20,10 @@
     </div>
     
     <div class="question-form">
+        <div class="commands">
+            <button type="button" class="send-btn" onclick="lockAnswer()">Verrouiller</button>
+            <button type="button" class="send-btn" onclick="sendNewQuestion()">Nouvelle question</button>
+        </div>
         <div class="question-type">
             <input type="radio" name="question" id="question1" value="1" onchange="loadQuestionOption(this.value)">
             <label class="question" for="question1">Question simple</label>
@@ -30,7 +34,6 @@
         </div>
         <div class="question-option" id="question-option">
         </div>
-        <button type="button" class="send-btn" onclick="sendNewQuestion()">Nouvelle question</button>
     </div>
     {% if error %}
     <ul>

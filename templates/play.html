@@ -27,12 +27,16 @@
     </ul>
     {% elif questionType=="1" %}
     <h2>Votre réponse</h2>
-    <textarea class="player-answer" rows="10" cols="60" placeholder="Votre réponse" id="answer">{% if data["answer"] %}{{ data["answer"] }}{% endif %}</textarea>
+    <textarea class="player-answer" rows="10" cols="60" placeholder="Votre réponse" id="answer" {% if locked %}disabled{% endif %}>{% if data["answer"] %}{{ data["answer"] }}{% endif %}</textarea>
+    {% if not locked%}
     <button type="button" class="send-btn" name="send" id="send-btn" onclick="clickValidate()">Valider</button>
+    {% endif %}
     {% elif questionType=="2" %}
     <img class="question-image" id="question-image" src="{{ imageURL }}">
-    <textarea class="player-answer" rows="2" placeholder="Votre réponse" id="answer">{% if data["answer"] %}{{ data["answer"] }}{% endif %}</textarea>
+    <textarea class="player-answer" rows="2" placeholder="Votre réponse" id="answer" {% if locked %}disabled{% endif %}>{% if data["answer"] %}{{ data["answer"] }}{% endif %}</textarea>
+    {% if not locked%}
     <button type="button" class="send-btn" name="send" id="send-btn" onclick="clickValidate()">Valider</button>
+    {% endif %}
     {% elif questionType=="3" %}
         {% if data["answer"] %}
         <button type="button" class="buzz" id="buzz" onclick="clickBuzz()" disabled="">

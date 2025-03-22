@@ -14,6 +14,7 @@ teams = {}
 questionType = 0
 questionCount = 0
 imagename = ""
+locked = False
 buzzCount = 0
 teamCount = 0
 
@@ -66,7 +67,7 @@ def play():
         return redirect(url_for("home"))
     else:
         print(questionType)
-        return render_template("play.html", name=name, data=teams[name], questionType=questionType, imageURL=imagename)
+        return render_template("play.html", name=name, data=teams[name], questionType=questionType, imageURL=imagename, locked=locked)
 
 @app.route('/gamemaster', methods=['POST', 'GET'])
 def admin():
@@ -249,6 +250,8 @@ def kick(data):
 
 @socketio.on("question")
 def sendQuestion(data):
+    global locked
+    locked = False
     global questionType
     questionType = data['type']
     print(f"new {questionType} send")
@@ -275,6 +278,17 @@ def sendQuestion(data):
         imagename = f.name
     
     send(content, to="teams")
+
+@socketio.on("lock")
+def lockAnswer(state):
+    print("lock answer")
+    lockOrder = {
+        "action": "lock",
+        "state": state
+    }
+    global locked
+    locked =  state
+    send(lockOrder, to="teams")
 
 @socketio.on("history")
 def getHistory():

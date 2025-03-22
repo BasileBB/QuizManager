@@ -44,6 +44,12 @@ const sendAnswer = () => {
     socketio.emit("answer", {data: answer.value});
 };
 
+const lockAnswer = () => {
+    sendAnswer();
+    answer.disabled=true;
+    document.getElementById('send-btn').remove();
+};
+
 socketio.on("message", (data) => {
     console.log(data);
     switch(data.action){
@@ -71,9 +77,15 @@ socketio.on("message", (data) => {
 
             }
             break;
+        case "lock":
+            if (data.state){
+                lockAnswer()
+            }
+            break;
         case "kick":
             console.log("I'm kicked")
             window.location.replace("/")
+            break;
         default:
             console.log("Unexpected action");
     }

@@ -132,6 +132,10 @@
         }
     }
 
+    const lockAnswer = () => {
+        socketio.emit("lock", {"state": true});
+    }
+
     function loadQuestionOption(value) {
         const options = document.getElementById("question-option");
         switch (value) {
