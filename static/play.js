@@ -44,10 +44,15 @@ const sendAnswer = () => {
     socketio.emit("answer", {data: answer.value});
 };
 
-const lockAnswer = () => {
-    sendAnswer();
-    answer.disabled=true;
-    document.getElementById('send-btn').remove();
+const lockAnswer = (state) => {
+    if(state){
+        sendAnswer();
+    }
+    const answer = document.getElementById("answer");
+    answer.disabled = state;
+    const sendBtn = document.getElementById('send-btn')
+    sendBtn.hidden = state;
+    sendBtn.disabled = state;
 };
 
 socketio.on("message", (data) => {
@@ -78,9 +83,7 @@ socketio.on("message", (data) => {
             }
             break;
         case "lock":
-            if (data.state){
-                lockAnswer()
-            }
+            lockAnswer(data.state);
             break;
         case "kick":
             console.log("I'm kicked")

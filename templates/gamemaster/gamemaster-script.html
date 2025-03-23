@@ -52,7 +52,7 @@
         const team = document.getElementById(name);
 
         team.style.filter = "grayscale(1)";
-        team.style.order = "10000"
+        // team.style.order = "10000"
 
     }
 
@@ -112,13 +112,17 @@
         const question_type = document.querySelector('input[name="question"]:checked').value;
 
         if (question_type=="2") {
-            const questionImage = document.getElementById("question-image").files[0]
-            console.log("send 2")
-            socketio.emit("question", {"type": question_type, "image": questionImage})
+            const questionImage = document.getElementById("question-image")
+            if(questionImage.value == ""){
+                return;
+            }
+            socketio.emit("question", {"type": question_type, "image": questionImage.files[0]})
         }else{
             socketio.emit("question", {"type": question_type});
         }
-
+        if (document.getElementById("lock-switch").checked){
+            document.getElementById("lock-switch").click();
+        }
         
         const teams = document.querySelectorAll('.team');
         for (let i = 0 ; i < teams.length; i++){
@@ -132,8 +136,13 @@
         }
     }
 
-    const lockAnswer = () => {
-        socketio.emit("lock", {"state": true});
+    const lockAnswer = (state) => {
+        socketio.emit("lock", {"state": state});
+        if (state){
+            document.getElementById("lock").innerHTML = "Déverrouiller 🔒"
+        }else{
+            document.getElementById("lock").innerHTML = "Verrouiller 🔓"
+        }
     }
 
     function loadQuestionOption(value) {

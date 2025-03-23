@@ -177,7 +177,7 @@ h2 {
     margin: 10px;
 }
 
-input[name="question"] {
+input[name="question"], .toggle-cbx{
     display: none;
 }
 
@@ -216,11 +216,18 @@ input[name="question"]:checked + .question {
     transform: translate(4px, 4px);
 }
 
+.commands{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 4em;
+}
+
 button{
     font-family: 'Pangolin', sans-serif;
 }
 
-.send-btn {
+.send-btn, .toggle-btn{
     /* margin: 20px; */
     border: 2px solid black;
     border-radius: 10px;
@@ -230,7 +237,13 @@ button{
     cursor: pointer;
 }
 
-.send-btn:active{
+.send-btn:active, .toggle-btn:active{
+    box-shadow: black 0px 0px;
+    transform: translate(4px, 4px);
+}
+
+input[name="lock-switch"]:checked + .toggle-btn{
+    background-color: darkslateblue;
     box-shadow: black 0px 0px;
     transform: translate(4px, 4px);
 }

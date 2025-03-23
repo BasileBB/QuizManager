@@ -250,8 +250,6 @@ def kick(data):
 
 @socketio.on("question")
 def sendQuestion(data):
-    global locked
-    locked = False
     global questionType
     questionType = data['type']
     print(f"new {questionType} send")
@@ -280,14 +278,18 @@ def sendQuestion(data):
     send(content, to="teams")
 
 @socketio.on("lock")
-def lockAnswer(state):
-    print("lock answer")
+def lockAnswer(data):
+    if data["state"]:
+        print("lock answer")
+    else:
+        print("unlock answer")
+    print(data["state"])
     lockOrder = {
         "action": "lock",
-        "state": state
+        "state": data["state"]
     }
     global locked
-    locked =  state
+    locked =  data["state"]
     send(lockOrder, to="teams")
 
 @socketio.on("history")

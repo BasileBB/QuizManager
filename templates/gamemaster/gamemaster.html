@@ -21,7 +21,8 @@
     
     <div class="question-form">
         <div class="commands">
-            <button type="button" class="send-btn" onclick="lockAnswer()">Verrouiller</button>
+            <input class="toggle-cbx" id="lock-switch" name="lock-switch" type="checkbox" onchange="lockAnswer(this.checked)">
+            <label class="toggle-btn" id="lock" for="lock-switch">Verrouiller 🔓</label>
             <button type="button" class="send-btn" onclick="sendNewQuestion()">Nouvelle question</button>
         </div>
         <div class="question-type">
