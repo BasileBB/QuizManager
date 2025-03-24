@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for, send_from_directory
 from flask_socketio import join_room, leave_room, send, SocketIO
 import os
+import atexit
 from glob import glob
 from random import choice, shuffle
 from string import ascii_uppercase
@@ -271,6 +272,7 @@ def sendQuestion(data):
         name = datetime.now().strftime('%d%m%y%H%M%S')
         f = open("static/image/tempfile" + name, "wb")
         f.write(data['image'])
+        f.close()
         content["image"] = url_for("static", filename="/image/tempfile"+name)
         global imagename
         imagename = f.name
@@ -283,7 +285,6 @@ def lockAnswer(data):
         print("lock answer")
     else:
         print("unlock answer")
-    print(data["state"])
     lockOrder = {
         "action": "lock",
         "state": data["state"]
@@ -310,8 +311,19 @@ def distribute_sample(p_remaining_sample):
 
         return p_remaining_sample.pop()
 
+def clean_image_dir():
+    try:
+        file_list = os.listdir("static/image")
+    except FileNotFoundError:
+        print("no static/image directory")
+    else:
+        for f in file_list:
+            os.remove("static/image/" + f)
+        print("static/image cleaned")
+
 if __name__ == "__main__":
     # socketio.run(app, debug=True)
+    atexit.register(clean_image_dir)
     sample_list = glob("*.mp3", root_dir="static/sample")
     remaining_sample_list = sample_list.copy()
     shuffle(remaining_sample_list)
